@@ -1,0 +1,12 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "serverless-pipeline"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1gvorbokdyuqu"
+s3_prefix = "serverless-pipeline"
+region = "eu-west-1"
+profile = "training"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []

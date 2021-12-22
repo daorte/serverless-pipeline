@@ -1,0 +1,37 @@
+version: 0.2
+env:
+  variables:
+    BUILD_DIR: "sam-build"
+    INPUT_TEMPLATE: "template.yaml"
+    OUTPUT_TEMPLATE: "packaged.yaml"
+phases:
+  install:
+    runtime-versions:
+      golang: 1.14
+    commands:
+      - echo INSTALL PHASE
+      - CURRENT_TIME=$(date +%Y%m%d%H%M%S%N)
+      - echo $CURRENT_TIME
+
+  pre_build:
+    commands:
+      # Run tests, lint scripts or any other pre-build checks.
+      - echo PRE_BUILD PHASE
+
+  build:
+    commands:
+      # Use Build phase to build your artifacts (compile, etc.)
+      - echo Building SAM application
+      - sam build --build-dir $BUILD_DIR --template-file $INPUT_TEMPLATE
+
+  post_build:
+    commands:
+      # Use Post-Build for notifications, git tags, upload artifacts to S3
+      - echo Packaging SAM application
+      - sam package --template-file $BUILD_DIR/$INPUT_TEMPLATE --output-template-file $OUTPUT_TEMPLATE
+
+artifacts:
+  files:
+    # list of local files relative to this build environment that will be added to the final artifact (zip)
+    - $OUTPUT_TEMPLATE
+  discard-paths: yes
